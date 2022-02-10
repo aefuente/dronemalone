@@ -14,17 +14,17 @@ surveillance, tracking, and the film industry.
 ## Environment setup
 
 - Clone the repository
-'''
+```
 git clone git@github.com:aefuente/dronemalone.git capstone && cd capstone
 export capstone=$PWD
-'''
+```
 - Setup python environment  
 This project uses conda package manager. For details on how to install conda
 visit https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html 
 
-'''
+```
 conda create -n capstone python=3.10
 conda activate capstone
 pip install -r requirements.txt
-''' 
+```
  
