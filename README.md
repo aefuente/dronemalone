@@ -10,6 +10,7 @@ surveillance, tracking, and the film industry.
 
 ## Contents
 1. [Environment Setup](#environment-setup)
+2. [Demo](#demo)
 
 ## Environment setup
 
