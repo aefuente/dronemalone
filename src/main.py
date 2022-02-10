@@ -17,7 +17,7 @@ def intitialize():
     myDrone.streamon()
     return myDrone
 
-def getFrame(myDrone,w=360,h=240):
+def getFrame(myDrone,w,h):
     myFrame = myDrone.get_frame_read()
     myFrame = myFrame.frame
     img = cv.resize(myFrame,(w,h))
@@ -28,10 +28,16 @@ myDrone = intitialize()
 
 while True:
     #print("Battery:",myDrone.get_battery())
+    #Frame reading
+    #img = getFrame(myDrone,w,h)
 
-    img = getFrame(myDrone,w,h)
-
-    if cv.waitKey(1) == ord('q'):
+    #Show frame in window
+    #cv.imshow('Frame',img)
+    if cv.waitKey(1) & 0xFF == ord('q'):
         print("Battery:",myDrone.get_battery())
         myDrone.land()
         break
+
+
+
+
