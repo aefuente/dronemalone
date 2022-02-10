@@ -27,4 +27,11 @@ conda create -n capstone python=3.10
 conda activate capstone
 pip install -r requirements.txt
 ```
- 
+
+## Demo
+- [Setup](#environment-setup) your environment
+- Run `src/main.py`
+```
+cd $capstone
+python3 ./src/main.py
+```
