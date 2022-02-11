@@ -1,41 +1,48 @@
 from djitellopy import Tello
 import cv2 as cv
 import numpy as np
+import keyboard
 
+#Width and height of image window
 w,h = 360,240
 
+#Creates a drone object
 def intitialize():
-    myDrone = Tello()
-    myDrone.connect()
-    myDrone.for_back_velocity = 0
-    myDrone.left_right_velocity = 0
-    myDrone.up_down_velocity = 0
-    myDrone.yaw_velocity = 0
-    myDrone.speed = 0
-    print("Battery:",myDrone.get_battery())
-    myDrone.streamoff()
-    myDrone.streamon()
-    return myDrone
+    drone = Tello()
+    drone.connect()
+    drone.for_back_velocity = 0
+    drone.left_right_velocity = 0
+    drone.up_down_velocity = 0
+    drone.yaw_velocity = 0
+    drone.speed = 0
+    print("Battery:",drone.get_battery())
+    drone.streamoff()
+    drone.streamon()
+    return drone
 
-def getFrame(myDrone,w,h):
-    myFrame = myDrone.get_frame_read()
+#Builds the frame from the drone camera
+def getFrame(drone,w,h):
+    myFrame = drone.get_frame_read()
     myFrame = myFrame.frame
     img = cv.resize(myFrame,(w,h))
     return img
 
+#Invokes drone initialization
+drone = intitialize()
 
-myDrone = intitialize()
-
+#Main loop
 while True:
-    #print("Battery:",myDrone.get_battery())
-    #Frame reading
-    #img = getFrame(myDrone,w,h)
 
-    #Show frame in window
-    #cv.imshow('Frame',img)
-    if cv.waitKey(1) & 0xFF == ord('q'):
-        print("Battery:",myDrone.get_battery())
-        myDrone.land()
+    #Invokes frame method to create an image
+    img = getFrame(drone,w,h)
+
+    #Show image in window
+    cv.imshow('Frame',img)
+
+    #Exit the program by pressing 'q'
+    if keyboard.is_pressed('q'):
+        print("Battery:",drone.get_battery())
+        drone.land()
         break
 
 
