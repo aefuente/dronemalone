@@ -6,6 +6,9 @@ import keyboard
 #Width and height of image window
 w,h = 360,240
 
+#For tv
+#w,h = 930, 500
+
 #Creates a drone object
 def intitialize():
     drone = Tello()
@@ -37,14 +40,14 @@ while True:
     img = getFrame(drone,w,h)
 
     #Show image in window
-    cv.imshow('Frame',img)
+    cv.imshow('Frame', img)
 
     #Exit the program by pressing 'q'
     if keyboard.is_pressed('q'):
         print("Battery:",drone.get_battery())
         drone.land()
         break
-
+    
 
 
 
