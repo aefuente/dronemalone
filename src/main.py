@@ -42,6 +42,9 @@ while True:
     #Show image in window
     cv.imshow('Frame', img)
 
+    if cv.waitKey(100) == ord('q'):
+        break
+
     #Exit the program by pressing 'q'
     if keyboard.is_pressed('q'):
         print("Battery:",drone.get_battery())
