@@ -1,4 +1,4 @@
-from djidronepy import Tello
+from djitellopy import Tello
 import cv2 
 import pygame
 import numpy as np
@@ -14,24 +14,16 @@ FPS = 120
 SCREEN_WIDTH = 960
 SCREEN_HEIGHT = 720
 face_cascade = cv2.CascadeClassifier('./src/cascades/haarcascade_frontalface_default.xml')
+# Calculate center of frame
+center_x = int(SCREEN_WIDTH/2)
+center_y = int(SCREEN_HEIGHT/2)
 
 class FrontEnd(object):
-    """ Maintains the Tello display and moves it through the keyboard keys.
-        Press escape key to quit.
-        The controls are:
-            - T: Takeoff
-            - L: Land
-            - Arrow keys: Forward, backward, left and right.
-            - A and D: Counter clockwise and clockwise rotations (yaw)
-            - W and S: Up and down.
-    """
-
+ 
     def __init__(self):
         # Init pygame
         
         pygame.init()
-
-        
 
         # Creat pygame window
         pygame.display.set_caption("Automatic Drone Tracking")
@@ -59,7 +51,7 @@ class FrontEnd(object):
         self.drone.connect()
         self.drone.set_speed(self.speed)
 
-        # In case streaming is on. This happens when we quit this program without the escape key.
+        #Streaming refresh if was already on
         self.drone.streamoff()
         self.drone.streamon()
 
@@ -84,15 +76,13 @@ class FrontEnd(object):
             if frame_read.stopped:
                 break
 
-            ##Insert face detections -Byron
+            #Face Detection Begins
             self.screen.fill([0, 0, 0])
             #----------------------------
             frame = frame_read.frame
             frame = cv2.resize(frame, (SCREEN_WIDTH, SCREEN_HEIGHT))
-
-            # Calculate center of frame
-            center_x = int(SCREEN_WIDTH/2)
-            center_y = int(SCREEN_HEIGHT/2)
+            
+            
             # Draw circle at center of the frame
             cv2.circle(frame, (center_x, center_y), 10, (0, 255, 0))
 
@@ -100,7 +90,7 @@ class FrontEnd(object):
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = face_cascade.detectMultiScale(gray, 1.3, minNeighbors=5)
 
-            # If a face is recognized, draw a rectangle over it and add it to the face list
+            # If a face is recognized, add to list of faces and draw indicators to frame around face
             face_center_x = center_x
             face_center_y = center_y
             z_area = 0
@@ -118,15 +108,12 @@ class FrontEnd(object):
             offset_y = face_center_y - center_y
 
             cv2.putText(frame, f'[{offset_x}, {offset_y}, {z_area}]', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
-            #----------------------------
-            # battery n. 电池
+            
             text = "Battery: {}%".format(self.drone.get_battery())
             cv2.putText(frame, text, (5, 720 - 5),cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = np.rot90(frame)
             frame = np.flipud(frame)
-
-            
 
             frame = pygame.surfarray.make_surface(frame)
             self.screen.blit(frame, (0, 0))
@@ -138,8 +125,6 @@ class FrontEnd(object):
         self.drone.end()
 
     def keydown(self, key):
-        """ Update velocities based on key pressed
-        """
         if key == pygame.K_UP:  # set forward velocity
             self.for_back_velocity = S
         elif key == pygame.K_DOWN:  # set backward velocity
@@ -158,8 +143,6 @@ class FrontEnd(object):
             self.yaw_velocity = S
 
     def keyup(self, key):
-        """ Update velocities based on key released
-        """
         if key == pygame.K_UP or key == pygame.K_DOWN:  # set zero forward/backward velocity
             self.for_back_velocity = 0
         elif key == pygame.K_LEFT or key == pygame.K_RIGHT:  # set zero left/right velocity
@@ -176,17 +159,13 @@ class FrontEnd(object):
             self.send_rc_control = False
 
     def update(self):
-        """ Update routine. Send velocities to Tello.
-        """
         if self.send_rc_control:
             self.drone.send_rc_control(self.left_right_velocity, self.for_back_velocity,self.up_down_velocity, self.yaw_velocity)
+            #print("Sending Velocities", self.left_right_velocity, self.for_back_velocity,self.up_down_velocity, self.yaw_velocity)
 
 
 def main():
     frontend = FrontEnd()
-
-    # run frontend
-
     frontend.run()
 
 
