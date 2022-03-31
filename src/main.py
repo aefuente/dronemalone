@@ -5,29 +5,10 @@ import numpy as np
 import time
 
 # Speed of the drone
-
-<<<<<<< HEAD
-#For tv
-#w,h = 930, 500
-
-#Creates a drone object
-def intitialize():
-    drone = Tello()
-    drone.connect()
-    drone.for_back_velocity = 0
-    drone.left_right_velocity = 0
-    drone.up_down_velocity = 0
-    drone.yaw_velocity = 0
-    drone.speed = 0
-    print("Battery:",drone.get_battery())
-    drone.streamoff()
-    drone.streamon()
-    return drone
-=======
 S = 60
 # Frames per second of the pygame window display
 # A low number also results in input lag, as input information is processed once per frame.
->>>>>>> controller
+
 
 FPS = 120
 SCREEN_WIDTH = 960
@@ -52,20 +33,6 @@ class FrontEnd(object):
         
         self.drone = Tello()
 
-<<<<<<< HEAD
-    #Show image in window
-    cv.imshow('Frame', img)
-
-    if cv.waitKey(100) == ord('q'):
-        break
-
-    #Exit the program by pressing 'q'
-    if keyboard.is_pressed('q'):
-        print("Battery:",drone.get_battery())
-        drone.land()
-        break
-    
-=======
         # Drone velocities between -100~100
         
         self.for_back_velocity = 0
@@ -195,8 +162,6 @@ class FrontEnd(object):
         if self.send_rc_control:
             self.drone.send_rc_control(self.left_right_velocity, self.for_back_velocity,self.up_down_velocity, self.yaw_velocity)
             #print("Sending Velocities", self.left_right_velocity, self.for_back_velocity,self.up_down_velocity, self.yaw_velocity)
-
->>>>>>> controller
 
 def main():
     frontend = FrontEnd()
