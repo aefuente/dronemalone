@@ -10,13 +10,13 @@ S = 60
 # Frames per second of the pygame window display
 # A low number also results in input lag, as input information is processed once per frame.
 
-FPS = 120
-SCREEN_WIDTH = 960
-SCREEN_HEIGHT = 720
+fps = 120
+screen_width = 960
+screen_height = 720
 face_cascade = cv2.CascadeClassifier('./src/cascades/haarcascade_frontalface_default.xml')
 # Calculate center of frame
-center_x = int(SCREEN_WIDTH/2)
-center_y = int(SCREEN_HEIGHT/2)
+center_x = int(screen_width/2)
+center_y = int(screen_height/2)
 
 class FrontEnd(object):
  
@@ -44,7 +44,7 @@ class FrontEnd(object):
         self.send_rc_control = False
 
         # create update timer
-        pygame.time.set_timer(pygame.USEREVENT + 1, 1000 // FPS)
+        pygame.time.set_timer(pygame.USEREVENT + 1, 1000 // fps)
 
     def run(self):
 
@@ -80,7 +80,7 @@ class FrontEnd(object):
             self.screen.fill([0, 0, 0])
             #----------------------------
             frame = frame_read.frame
-            frame = cv2.resize(frame, (SCREEN_WIDTH, SCREEN_HEIGHT))
+            frame = cv2.resize(frame, (screen_width, screen_height))
             
             
             # Draw circle at center of the frame
@@ -119,7 +119,7 @@ class FrontEnd(object):
             self.screen.blit(frame, (0, 0))
             pygame.display.update()
 
-            time.sleep(1 / FPS)
+            time.sleep(1 / fps)
 
         # Call it always before finishing. To deallocate resources.
         self.drone.end()
