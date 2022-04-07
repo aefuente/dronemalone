@@ -26,7 +26,7 @@ class FrontEnd(object):
         pygame.init()
 
         # Creat pygame window
-        pygame.display.set_caption("Automatic Drone Tracking")
+        pygame.display.set_caption('Automatic Drone Tracking')
         self.screen = pygame.display.set_mode([960, 720])
 
         # Init Tello object that interacts with the Tello drone
@@ -109,7 +109,7 @@ class FrontEnd(object):
 
             cv2.putText(frame, f'[{offset_x}, {offset_y}, {z_area}]', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
             
-            text = "Battery: {}%".format(self.drone.get_battery())
+            text = 'Battery: {}%'.format(self.drone.get_battery())
             cv2.putText(frame, text, (5, 720 - 5),cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = np.rot90(frame)
@@ -161,7 +161,7 @@ class FrontEnd(object):
     def update(self):
         if self.send_rc_control:
             self.drone.send_rc_control(self.left_right_velocity, self.for_back_velocity,self.up_down_velocity, self.yaw_velocity)
-            #print("Sending Velocities", self.left_right_velocity, self.for_back_velocity,self.up_down_velocity, self.yaw_velocity)
+            #print('Sending Velocities', self.left_right_velocity, self.for_back_velocity,self.up_down_velocity, self.yaw_velocity)
 
 
 def main():

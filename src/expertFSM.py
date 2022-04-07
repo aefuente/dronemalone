@@ -21,28 +21,28 @@ from pickle import TRUE
 next_state = 1
 
 def INIT():
-    #print("INIT STATE")
+    #print('INIT STATE')
     global next_state
     next_state = 2 # move to TAKEOFF STATE
-    command = ""
+    command = ''
     return (0,0,0,0)
 
 def TAKEOFF():
-    #print("TAKEOFF_STATE")
+    #print('TAKEOFF_STATE')
     global next_state
     next_state = 4 # move to idle state
-    command = "takeoff"
+    command = 'takeoff'
     return (0,0,0,0)
     
 
 def LAND():
-    #print("LAND_STATE")
-    command = "land"
+    #print('LAND_STATE')
+    command = 'land'
     return (0,0,0,0)
     
 # To-Do: check buffer/thresholds (20 at the moment). Or replace with ABS value percentage comparisons
 def IDLE():
-    #print("IDLE_STATE")
+    #print('IDLE_STATE')
     global next_state, X, Y, ROI
     if X < 0 - 100:
         next_state = 5 #MOVE_LEFT #5
@@ -59,54 +59,54 @@ def IDLE():
     else:
         next_state = 4
         
-	#elif(battery < battery_shutoff):
-	#	next_state = FINAL
-    command = ""
+    #elif(battery < battery_shutoff):
+    #	next_state = FINAL
+    command = ''
     return (0,0,0,0)
 
 def MOVE_LEFT():
-    print("MOVE_LEFT_STATE", "X:", X, "PrevX:", PrevX)
+    print('MOVE_LEFT_STATE', 'X:', X, 'PrevX:', PrevX)
     global next_state
     next_state = 4
-    command = "left 20"
+    command = 'left 20'
     return (30,0,0,0)
     
 
 def MOVE_RIGHT():
-    #print("MOVE_RIGHT_STATE")
+    #print('MOVE_RIGHT_STATE')
     global next_state
     next_state = 4
-    command = "right 20"
+    command = 'right 20'
     return (0,0,0,0)
     
 
 def MOVE_DOWN():
-    #print("MOVE_DOWN_STATE")
+    #print('MOVE_DOWN_STATE')
     global next_state
     next_state = 4
-    command = "down 20"
+    command = 'down 20'
     return (0,0,0,0)
 
 
 def MOVE_UP():
-    #print("MOVE_UP_STATE")
+    #print('MOVE_UP_STATE')
     global next_state
     next_state = 4
-    command = "up 20"
+    command = 'up 20'
     return (0,0,0,0)
 
 def MOVE_FORWARD():
-    #print("MOVE_FORWARD_STATE")
+    #print('MOVE_FORWARD_STATE')
     global next_state
     next_state = 4
-    command = "forward 20"
+    command = 'forward 20'
     return (0,0,0,0)
 
 def MOVE_BACKWARD():
-    #print("MOVE_BACKWARD_STATE")
+    #print('MOVE_BACKWARD_STATE')
     global next_state
     next_state = 4
-    command = "back 20"
+    command = 'back 20'
     return (0,0,0,0)
 
 states = {
@@ -138,9 +138,9 @@ def FSM_TICK(update_X, update_Y, update_ROI): # Main FSM call
     PrevY = Y
     PrevROI = ROI
 
-    # print ("PrevX: " + str(PrevX))
-    # print ("PrevY: " + str(PrevY))
-    # print ("PrevROI: " + str(PrevROI))
+    # print ('PrevX: ' + str(PrevX))
+    # print ('PrevY: ' + str(PrevY))
+    # print ('PrevROI: ' + str(PrevROI))
 
     return command 
 
