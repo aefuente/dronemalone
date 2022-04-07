@@ -3,6 +3,7 @@ import cv2
 import pygame
 import numpy as np
 import time
+import expertFSM
 
 # Speed of the drone
 
@@ -58,11 +59,18 @@ class FrontEnd(object):
         frame_read = self.drone.get_frame_read()
 
         should_stop = False
+        flag = False
         while not should_stop:
 
             for event in pygame.event.get():
                 if event.type == pygame.USEREVENT + 1:
                     self.update()
+                    if(flag is True):
+                        pygame.time.wait(500)
+                    #print("TESTTTTTTTTTTTTTTTTTTTTTTTT")
+                    self.left_right_velocity, self.for_back_velocity, self.up_down_velocity, self.yaw_velocity = (0,0,0,0)
+                    self.update()
+                    flag = False
                 elif event.type == pygame.QUIT:
                     should_stop = True
                 elif event.type == pygame.KEYDOWN:
@@ -110,7 +118,16 @@ class FrontEnd(object):
             '''
             CALL FSM, adjustment made at top of loop
             = (10,10,0,0)
+            FSM_TICK(update_X, update_Y, update_ROI):
             '''
+            #pygame.time.wait(1000)
+            if(flag is False):
+                velocities = expertFSM.FSM_TICK(offset_x, offset_y, z_area)
+                if(velocities != (0,0,0,0)):
+                    self.left_right_velocity, self.for_back_velocity, self.up_down_velocity, self.yaw_velocity = velocities
+                    flag = True
+            
+            #print(response)
 
             cv2.putText(frame, f'[{offset_x}, {offset_y}, {z_area}]', (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
             
