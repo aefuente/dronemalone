@@ -25,7 +25,41 @@ FACE_CASCADE = cv2.CascadeClassifier('./src/cascades/haarcascade_frontalface_def
 
 CENTER_FRAME = (SCREEN_WIDTH//2, SCREEN_HEIGHT//2)
 
-class FrontEnd(object):
+
+
+'''
+
+Class for interfacing with the drone.
+
+'''
+
+class Drone:
+
+    def __init__(self):
+       self.drone = Tello()
+
+    def connect(self):
+        self.drone.connect()
+
+    def set_speed(self, speed):
+        self.drone.set_speed(speed)
+
+    def refresh_stream(self):
+        self.drone.streamoff()
+        self.drone.streamon()
+
+    def get_frame(self):
+        return self.drone.get_frame_read()
+
+     
+
+
+''' 
+
+Class for intitializing window display
+
+'''
+class FrontEnd:
 
     def __init__(self):
         self.for_back_velocity = 0
@@ -39,11 +73,8 @@ class FrontEnd(object):
         self.pygame.init()
         self.pygame.time.set_timer(self.pygame.USERVENT + 1, 1000//FPS)
 
-        self.drone = Tello()
-
-
     
     def display_window(self):
         self.pygame.display.set_caption(WINDOW_DISPLAY_CAPTION)
-
         self.screen = self.pygame.display.set_mode([SCREEN_WIDTH,SCREEN_HEIGHT])
+
