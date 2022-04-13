@@ -35,7 +35,6 @@ class FrontEnd(object):
         self.drone = Tello()
 
         # Drone velocities between -100~100
-        
         self.for_back_velocity = 0
         self.left_right_velocity = 0
         self.up_down_velocity = 0
@@ -89,7 +88,6 @@ class FrontEnd(object):
             #----------------------------
             frame = frame_read.frame
             frame = cv2.resize(frame, (SCREEN_WIDTH, SCREEN_HEIGHT))
-            
             
             # Draw circle at center of the frame
             cv2.circle(frame, (center_x, center_y), 10, (0, 255, 0))
