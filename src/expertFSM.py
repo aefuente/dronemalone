@@ -44,9 +44,9 @@ def LAND():
 def IDLE():
     #print("IDLE_STATE")
     global next_state, X, Y, ROI
-    if X < 0 - 100:
+    if X < 0 - 200:
         next_state = 5 #MOVE_LEFT #5
-    elif X > PrevX + 20:
+    elif X > 0 + 200:
         next_state = 6 #MOVE_RIGHT #6
     elif ROI > PrevROI:
         next_state = 10 # MOVE_BACKWARD #10
@@ -69,7 +69,7 @@ def MOVE_LEFT():
     global next_state
     next_state = 4
     command = "left 20"
-    return (30,0,0,0)
+    return (-20,0,0,0)
     
 
 def MOVE_RIGHT():
@@ -77,7 +77,7 @@ def MOVE_RIGHT():
     global next_state
     next_state = 4
     command = "right 20"
-    return (0,0,0,0)
+    return (20,0,0,0)
     
 
 def MOVE_DOWN():
