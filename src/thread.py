@@ -24,11 +24,11 @@ center_y = int(SCREEN_HEIGHT/2)
 class Cascade(object):
 
     def __init__(self, drone):
-        self.faces = 0
+        self.faces = drone.get_frame_read()
         self.frame = 0
         self.drone = drone
 
-        self.thread = Thread(target=self.run, args())
+        self.thread = Thread(target=self.run, args=())
         self.thread.daemon = True
         self.thread.start()
 
@@ -64,13 +64,14 @@ class FrontEnd(object):
         
         self.drone = Tello()
         self.drone.connect()
+        self.speed = 10
         self.drone.set_speed(self.speed)
         
         #Streaming refresh if was already on
         self.drone.streamoff()
         self.drone.streamon()
 
-        self.cascade = Cascade(drone)
+        self.cascade = Cascade(self.drone)
 
         # Drone velocities between -100~100
         
@@ -78,7 +79,6 @@ class FrontEnd(object):
         self.left_right_velocity = 0
         self.up_down_velocity = 0
         self.yaw_velocity = 0
-        self.speed = 10
 
         self.send_rc_control = False
 
@@ -110,8 +110,8 @@ class FrontEnd(object):
                 elif event.type == pygame.KEYUP:
                     self.keyup(event.key)
 
-            if frame_read.stopped:
-                break
+            #if frame_read.stopped:
+            #    break
 
             #Face Detection Begins
             self.screen.fill([0, 0, 0])
