@@ -67,7 +67,7 @@ class FrontEnd(object):
                     self.update()
                     if(flag is True):
                         pygame.time.wait(500)
-                    #print("TESTTTTTTTTTTTTTTTTTTTTTTTT")
+                    
                     self.left_right_velocity, self.for_back_velocity, self.up_down_velocity, self.yaw_velocity = (0,0,0,0)
                     self.update()
                     flag = False
