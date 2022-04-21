@@ -19,6 +19,20 @@ face_cascade = cv2.CascadeClassifier('./src/cascades/haarcascade_frontalface_def
 center_x = int(SCREEN_WIDTH/2)
 center_y = int(SCREEN_HEIGHT/2)
 
+#function to take in list of faces and remove all but the one with the largest area
+def targetFace(faces):
+    faces=list(faces)
+    if len(faces) != 0:
+        max=-1
+        maxIndex=0
+        for i,face in enumerate(faces):
+            (x,y,w,h) = face
+            if w*h > max:
+                max=w*h
+                maxIndex=i
+        return [np.array(faces[maxIndex])]
+    return np.array([])
+
 class FrontEnd(object):
  
     def __init__(self):
@@ -102,6 +116,9 @@ class FrontEnd(object):
             face_center_x = center_x
             face_center_y = center_y
             z_area = 0
+
+            faces=targetFace(faces)
+
             for face in faces:
                 (x, y, w, h) = face
                 cv2.rectangle(frame,(x, y),(x + w, y + h),(255, 255, 0), 2)
