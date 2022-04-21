@@ -1,4 +1,5 @@
 djitellopy
 av
 pillow
-keyboard
+opencv-python
+pygame
