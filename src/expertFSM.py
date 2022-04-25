@@ -52,9 +52,9 @@ def IDLE():
         next_state = 10 # MOVE_BACKWARD #10
     elif ROI < 20000 and ROI !=0:
         next_state = 9 #MOVE_FORWARD #9
-    elif Y < 0 - 100:
+    elif Y < 0 - 25:
         next_state = 8 #MOVE_UP #8
-    elif Y > 0 + 100:
+    elif Y > 0 + 25:
         next_state = 7 #MOVE_DOWN #7
     else:
         next_state = 4
